@@ -1,8 +1,13 @@
 #ifndef TEST_BAT_H
-#define TEST_BAT_H 
+#define TEST_BAT_H
 
-#include "batiment_io.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "../batiments/batiment_io.h"
+#include "../batiments/usine_brique.h"
 
-void TestCreation();
+void testCreation();
+
+void testCreationUsine();
 
 #endif

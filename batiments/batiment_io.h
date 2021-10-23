@@ -3,10 +3,15 @@
 
 #include "door.h"
 
+/*
+types de batiment : usine_brique = 0;
+*/
+
 typedef struct batiment_io
 {
     int pos_x;
     int pos_y;
+    int type;
     int rang;
     int niveau;
 

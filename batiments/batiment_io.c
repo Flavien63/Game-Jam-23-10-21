@@ -11,7 +11,7 @@ int initBatiment(batiment_io_t ** batiment , int nb_s_entree)
     if (*batiment != NULL)
     {
         (*batiment)->stock_entree = (int *)malloc(sizeof(int) * nb_s_entree);
-        if ((*batiment)->stock_entree == NULL || (*batiment)->stock_sortie == NULL)
+        if ((*batiment)->stock_entree == NULL)
         {
             erreur = 1;
         }
