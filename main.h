@@ -7,6 +7,8 @@
 #include <SDL2/SDL_ttf.h>
 #include "background.h"
 
+#include "tuyau.h"
+
 int main();
 /*#include "couleurs.h"
 #include "perso.h"
