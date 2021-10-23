@@ -19,6 +19,12 @@ typedef struct batiment_io
 
 int initBatiment(batiment_io_t ** batiment , int nb_s_entree , int nb_s_sortie);
 
+void newBatiment(batiment_io_t ** batiment , int pos_x , int pos_y , int nb_s_entree , int nb_s_sortie);
+
+void deleteBatiment(batiment_io_t * batiment);
+
 int newDoor(batiment_io_t * batiment , int side , int * tube , int type);
+
+int deleteDoor(batiment_io_t * batiment , int * tube);
 
 #endif

@@ -5,6 +5,7 @@
 int initBatiment(batiment_io_t ** batiment , int nb_s_entree , int nb_s_sortie)
 {
     int erreur = 0;
+    *batiment = NULL;
 
     *batiment = (batiment_io_t *)malloc(sizeof(batiment_io_t));
     if (*batiment != NULL)
@@ -24,16 +25,27 @@ int initBatiment(batiment_io_t ** batiment , int nb_s_entree , int nb_s_sortie)
     return erreur;
 }
 
-int newBatiment(batiment_io_t * batiment , int pos_x , int pos_y , int nb_s_entree , int nb_s_sortie)
+void newBatiment(batiment_io_t ** batiment , int pos_x , int pos_y , int nb_s_entree , int nb_s_sortie)
 {
     int erreur = 0;
 
-    erreur = initBatiment(&batiment , nb_s_entree , nb_s_sortie);
+    erreur = initBatiment(batiment , nb_s_entree , nb_s_sortie);
     if (!erreur)
     {
-        batiment->pos_x = pos_x;
-        batiment->pos_y = pos_y;
+        (*batiment)->pos_x = pos_x;
+        (*batiment)->pos_y = pos_y;
     }
+    else
+    {
+        printf("Erreur a la creation du batiment\n");
+    }
+}
+
+void deleteBatiment(batiment_io_t * batiment)
+{
+    free(batiment->stock_entree);
+    free(batiment->stock_sortie);
+    free(batiment);
 }
 
 int newDoor(batiment_io_t * batiment , int side , int * tube , int type)
@@ -60,6 +72,33 @@ int newDoor(batiment_io_t * batiment , int side , int * tube , int type)
             break;
         default :
             erreur = 1;
+    }
+
+    return erreur;
+}
+
+int deleteDoor(batiment_io_t * batiment , int * tube)
+{
+    int erreur = 0;
+    if (batiment->d_top.tube == tube)
+    {
+        batiment->d_top.tube = NULL;
+    }
+    else if (batiment->d_right.tube == tube)
+    {
+        batiment->d_right.tube = NULL;
+    }
+    else if (batiment->d_bottom.tube == tube)
+    {
+        batiment->d_bottom.tube = NULL;
+    }
+    else if (batiment->d_left.tube == tube)
+    {
+        batiment->d_left.tube = NULL;
+    }
+    else
+    {
+        erreur = 1;
     }
 
     return erreur;
