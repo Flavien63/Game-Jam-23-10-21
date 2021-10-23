@@ -1,13 +1,13 @@
 #include "usine_brique.h"
 
-void newUsine_brique(batiment_io_t ** lst_batiment , int pos_x , int pos_y)
+void newUsine_brique(batiment_io_t * tab_bat[C_MAX][C_MAX] , int pos_x , int pos_y)
 {
     batiment_io_t * batiment;
 
     newBatiment(&batiment , pos_x , pos_y , 1 , 1);
     batiment->type = 0;
     batiment->stock_entree[0] = 0;
-    lst_batiment[0] = batiment;         //a modifier avec l'insertion
+    tab_bat[pos_x][pos_y] = batiment;
 }
 
 int processUsine_Brique(batiment_io_t * batiment)

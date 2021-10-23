@@ -1,6 +1,8 @@
 #ifndef BATIMENT_IO_H
 #define BATIMENT_IO_H
 
+#define C_MAX 20
+
 #include "door.h"
 
 /*

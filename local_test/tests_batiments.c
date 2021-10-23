@@ -16,12 +16,13 @@ void testCreation()
 
 void testCreationUsine()
 {
-    batiment_io_t * lst_batiment[1];            //a changer avec la creation de la liste des usines
-    
-    newUsine_brique(lst_batiment , 18 , 34);
-    fctUsine_Brique(lst_batiment[0]);
-    newDoor(lst_batiment[0] , 0 , 0 , 1);
-    printf("type port0 = %d\n" , lst_batiment[0]->d_top.type);
-    deleteDoor(lst_batiment[0] , 0);
-    deleteBatiment(lst_batiment[0]);
+    batiment_io_t * tab_bat[20][20];
+
+
+    newUsine_brique(tab_bat, 15 , 12);
+    newDoor(tab_bat[15][12] , 0 , 0 , 0);
+    printf("type port0 = %d\n" , tab_bat[15][12]->d_top.type);
+    fctUsine_Brique(tab_bat[15][12]);
+    deleteDoor(tab_bat[15][12] , 0);
+    deleteBatiment(tab_bat[15][12]);
 }
