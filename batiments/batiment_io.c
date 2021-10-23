@@ -25,7 +25,7 @@ int initBatiment(batiment_io_t ** batiment , int nb_s_entree , int nb_s_sortie)
     return erreur;
 }
 
-void newBatiment(batiment_io_t ** batiment , int pos_x , int pos_y , int nb_s_entree , int nb_s_sortie)
+void newBatiment(batiment_io_t ** batiment , int pos_x , int pos_y , int nb_s_entree , int nb_s_sortie , int rang)
 {
     int erreur = 0;
 
@@ -34,6 +34,10 @@ void newBatiment(batiment_io_t ** batiment , int pos_x , int pos_y , int nb_s_en
     {
         (*batiment)->pos_x = pos_x;
         (*batiment)->pos_y = pos_y;
+        (*batiment)->rang = rang;
+        (*batiment)->niveau = 1;
+        (*batiment)->nb_sortie = 0;
+        (*batiment)->next_s = 0;
     }
     else
     {
@@ -73,6 +77,10 @@ int newDoor(batiment_io_t * batiment , int side , int * tube , int type)
         default :
             erreur = 1;
     }
+    if (!erreur && type == 1)
+    {
+        batiment->nb_sortie++;
+    }
 
     return erreur;
 }
@@ -80,21 +88,54 @@ int newDoor(batiment_io_t * batiment , int side , int * tube , int type)
 int deleteDoor(batiment_io_t * batiment , int * tube)
 {
     int erreur = 0;
+    int type;
+
     if (batiment->d_top.tube == tube)
     {
         batiment->d_top.tube = NULL;
+        type = batiment->d_top.type;
     }
     else if (batiment->d_right.tube == tube)
     {
         batiment->d_right.tube = NULL;
+        type = batiment->d_right.type;
     }
     else if (batiment->d_bottom.tube == tube)
     {
         batiment->d_bottom.tube = NULL;
+        type = batiment->d_bottom.type;
     }
     else if (batiment->d_left.tube == tube)
     {
         batiment->d_left.tube = NULL;
+        type = batiment->d_left.type;
+    }
+    else
+    {
+        erreur = 1;
+    }
+    if (!erreur && type == 1)
+    {
+        batiment->nb_sortie--;
+    }
+
+    return erreur;
+}
+
+int stockPlein(batiment_io_t * batiment , int stock , int max)
+{
+    return(batiment->stock_entree[stock] == max);
+}
+
+int sendRessource(batiment_io_t * batiment)
+{
+    int erreur = 0;
+
+    if (batiment->nb_sortie != 0)
+    {
+        batiment->next_s = (batiment->next_s + 1) % batiment->nb_sortie;
+        //fonction de test si le tube est plein
+        //fonction d'ajout dans un tube
     }
     else
     {

@@ -7,9 +7,13 @@ typedef struct batiment_io
 {
     int pos_x;
     int pos_y;
+    int rang;
+    int niveau;
 
     int * stock_entree;
     int * stock_sortie;
+    int nb_sortie;
+    int next_s;
 
     door_t d_top;
     door_t d_bottom;
@@ -26,5 +30,9 @@ void deleteBatiment(batiment_io_t * batiment);
 int newDoor(batiment_io_t * batiment , int side , int * tube , int type);
 
 int deleteDoor(batiment_io_t * batiment , int * tube);
+
+int stockPlein(batiment_io_t * batiment , int stock , int max);
+
+int sendRessource(batiment_io_t * batiment);
 
 #endif
