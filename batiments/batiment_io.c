@@ -24,6 +24,18 @@ int initBatiment(batiment_io_t ** batiment , int nb_s_entree , int nb_s_sortie)
     return erreur;
 }
 
+int newBatiment(batiment_io_t * batiment , int pos_x , int pos_y , int nb_s_entree , int nb_s_sortie)
+{
+    int erreur = 0;
+
+    erreur = initBatiment(&batiment , nb_s_entree , nb_s_sortie);
+    if (!erreur)
+    {
+        batiment->pos_x = pos_x;
+        batiment->pos_y = pos_y;
+    }
+}
+
 int newDoor(batiment_io_t * batiment , int side , int * tube , int type)
 {
     int erreur = 0;
