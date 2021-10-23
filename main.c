@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-#include "lunaire.h"
-=======
 /*main.c*/
 #include "main.h"
 
@@ -127,4 +124,3 @@ for (int j=0;j<20;++j)
     SDL_Quit();
     return 0;
 }
->>>>>>> main
