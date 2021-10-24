@@ -32,6 +32,8 @@ int processUsine_Brique(batiment_io_t * batiment)
 
 void fctUsine_Brique(batiment_io_t * batiment)
 {
+    int dest;
+
     processUsine_Brique(batiment);
-    sendRessource(batiment);
+    dest = destRessource(batiment);
 }

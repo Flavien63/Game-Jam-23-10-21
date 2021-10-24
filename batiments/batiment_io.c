@@ -27,6 +27,7 @@ int initBatiment(batiment_io_t ** batiment , int nb_s_entree)
 void newBatiment(batiment_io_t ** batiment , int pos_x , int pos_y , int nb_s_entree, int rang)
 {
     int erreur = 0;
+    int i;
 
     erreur = initBatiment(batiment , nb_s_entree);
     if (!erreur)
@@ -38,6 +39,10 @@ void newBatiment(batiment_io_t ** batiment , int pos_x , int pos_y , int nb_s_en
         (*batiment)->nb_sortie = 0;
         (*batiment)->next_s = 0;
         (*batiment)->stock_sortie = 0;
+        for (i = 0 ; i < 4 ; i++)
+        {
+            (*batiment)->door_T[i] = -1;
+        }
     }
     else
     {
@@ -51,65 +56,39 @@ void deleteBatiment(batiment_io_t * batiment)
     free(batiment);
 }
 
-int newDoor(batiment_io_t * batiment , int side , int * tube , int type)
+int newDoor(batiment_io_t * batiment , int side  , int type)
 {
     int erreur = 0;
 
-    switch (side)
+    if (side >= 0 && side < 4)
     {
-        case 0 :
-            batiment->d_top.tube = tube;
-            batiment->d_top.type = type;
-            break;
-        case 1 :
-            batiment->d_right.tube = tube;
-            batiment->d_right.type = type;
-            break;
-        case 2 :
-            batiment->d_bottom.tube = tube;
-            batiment->d_bottom.type = type;
-            break;
-        case 3 :
-            batiment->d_left.tube = tube;
-            batiment->d_left.type = type;
-            break;
-        default :
-            erreur = 1;
+        batiment->door_T[side] = type;
     }
+    else
+    {
+        erreur = 1;
+    }
+
     if (!erreur && type == 1)
     {
         batiment->nb_sortie++;
     }
+    
 
     return erreur;
 }
 
-int deleteDoor(batiment_io_t * batiment , int * tube)
+int deleteDoor(batiment_io_t * batiment , int side)
 {
     int erreur = 0;
-    int type;
+    int type = -1;
 
     if (batiment != NULL)
     {
-        if (batiment->d_top.tube == tube)
+        if (side >= 0 && side < 4)
         {
-            batiment->d_top.tube = NULL;
-            type = batiment->d_top.type;
-        }
-        else if (batiment->d_right.tube == tube)
-        {
-            batiment->d_right.tube = NULL;
-            type = batiment->d_right.type;
-        }
-        else if (batiment->d_bottom.tube == tube)
-        {
-            batiment->d_bottom.tube = NULL;
-            type = batiment->d_bottom.type;
-        }
-        else if (batiment->d_left.tube == tube)
-        {
-            batiment->d_left.tube = NULL;
-            type = batiment->d_left.type;
+            type = batiment->door_T[side];
+            batiment->door_T[side] = -1;
         }
         else
         {
@@ -139,20 +118,34 @@ int stockSortieVide(batiment_io_t * batiment)
     return(batiment->stock_sortie == 0);
 }
 
-int sendRessource(batiment_io_t * batiment)
+int destRessource(batiment_io_t * batiment)
 {
-    int erreur = 0;
+    int connection = -1;
+    int i;
+    int j = 0;
 
     if (batiment->nb_sortie != 0 && ! stockSortieVide(batiment))
     {
         batiment->next_s = (batiment->next_s + 1) % batiment->nb_sortie;
-        //fonction de test si le tube est plein
-        //fonction d'ajout dans un tube
-    }
-    else
-    {
-        erreur = 1;
-    }
 
-    return erreur;
+        while (i < 4 && j < batiment->next_s)
+        {
+            if (batiment->door_T[i] == 1)
+            {
+                j++;
+            }
+             i++;
+        }
+        if (i != 4)
+        {
+            connection = i;
+        }
+        else
+        {
+            connection = -2;
+        }
+    }
+    
+
+    return connection;
 }

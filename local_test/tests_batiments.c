@@ -5,10 +5,11 @@ void testCreation()
     batiment_io_t * batiment = NULL;
     int erreur = 0;
 
-    newBatiment(&batiment , 18 , 24 , 2 , 1);
+    newBatiment(&batiment , 18 , 24 , 1 , 1);
+    
     printf("pos_x = %d\n" , batiment->pos_x);
-    erreur = newDoor(batiment , 0 , 0 , 1);
-    printf("type port0 = %d\n" , batiment->d_top.type);
+    erreur = newDoor(batiment , 2 , 0);
+    printf("type port0 = %d\n" , batiment->door_T[2]);
     deleteDoor(batiment , 0);
 
     deleteBatiment(batiment);
@@ -20,9 +21,10 @@ void testCreationUsine()
 
 
     newUsine_brique(tab_bat, 15 , 12);
-    newDoor(tab_bat[15][12] , 0 , 0 , 0);
-    printf("type port0 = %d\n" , tab_bat[15][12]->d_top.type);
+    newDoor(tab_bat[15][12] , 0 , 1);
     fctUsine_Brique(tab_bat[15][12]);
+    printf("pos_x = %d\n" , tab_bat[15][12]->pos_x);
+    printf("type port0 = %d\n" , tab_bat[15][12]->door_T[0]);
     deleteDoor(tab_bat[15][12] , 0);
     deleteBatiment(tab_bat[15][12]);
 }

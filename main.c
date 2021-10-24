@@ -1,4 +1,5 @@
 #include "main.h"
+#include "local_test/tests_batiments.h"
 
 int main()
 {
@@ -109,6 +110,8 @@ int main()
     SDL_Quit();
 */
 
-    mainTuyau();
+    testCreation();
+    testCreationUsine();
+
     return 0;
 }

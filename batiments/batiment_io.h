@@ -3,8 +3,6 @@
 
 #define C_MAX 20
 
-#include "door.h"
-
 /*
 types de batiment : usine_brique = 0;
 */
@@ -22,11 +20,8 @@ typedef struct batiment_io
     int nb_sortie;
     int next_s;
 
-    door_t d_top;
-    door_t d_bottom;
-    door_t d_left;
-    door_t d_right;
-}batiment_io_t;
+    int door_T[4];          //-1 = pas de tuyau ; 0 = entree ; 1 = sortie
+}batiment_io_t;             //door_T[0] = top ; door_T[1] = right ; door_T[2] = bottom ; door_T[3] = left
 
 int initBatiment(batiment_io_t ** batiment , int nb_s_entree);
 
@@ -34,14 +29,14 @@ void newBatiment(batiment_io_t ** batiment , int pos_x , int pos_y , int nb_s_en
 
 void deleteBatiment(batiment_io_t * batiment);
 
-int newDoor(batiment_io_t * batiment , int side , int * tube , int type);
+int newDoor(batiment_io_t * batiment , int side , int type);
 
-int deleteDoor(batiment_io_t * batiment , int * tube);
+int deleteDoor(batiment_io_t * batiment , int side);
 
 int stockEntreePlein(batiment_io_t * batiment , int stock , int max);
 
 int stockSortieVide(batiment_io_t * batiment);
 
-int sendRessource(batiment_io_t * batiment);
+int destRessource(batiment_io_t * batiment);
 
 #endif
