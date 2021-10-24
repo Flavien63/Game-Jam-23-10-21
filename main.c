@@ -9,12 +9,12 @@ int main()
         return EXIT_FAILURE;
     }
     // Initialisation de SDL_Mixer
-    if (Mix_OpenAudio(96000, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) < 0)
+    /*if (Mix_OpenAudio(96000, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) < 0)
     {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Erreur initialisation SDL_mixer : %s", Mix_GetError());
         SDL_Quit();
         return -1;
-    }
+    }*/
 
     /*    Mix_Music* music = Mix_LoadMUS("musique-dascenseur.mp3"); // Charge notre musique
 
@@ -72,19 +72,24 @@ int main()
         fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError());
     }
 
-    int carte[20][20];
-
-    for (int j = 0; j < 20; ++j)
-    {
-        for (int i = 0; i < 20; ++i)
-        {
-            carte[i][j] = 0;
-        }
-    }
-
-    SDL_Texture **tableau_minerai = malloc(10 * sizeof(SDL_Texture *));
-    tableau_minerai[0] = load_texture_from_image("lune.jpg", renderer);
-    dessin_arriere_plan(carte, renderer, tableau_minerai);
+    SDL_Texture **tableau_matiere = malloc(16 * sizeof(SDL_Texture *));
+    tableau_matiere[0] = load_texture_from_image("voxel-pack/PNG/Tiles/stone.png", renderer);
+    tableau_matiere[1] = load_texture_from_image("voxel-pack/PNG/Tiles/stone_browniron.png", renderer);
+    tableau_matiere[2] = load_texture_from_image("voxel-pack/PNG/Tiles/stone_silver.png", renderer);
+    tableau_matiere[3] = load_texture_from_image("voxel-pack/PNG/Tiles/stone_coal.png", renderer);
+    tableau_matiere[4] = load_texture_from_image("voxel-pack/PNG/Tiles/stone_gold.png", renderer);
+    tableau_matiere[5] = load_texture_from_image("voxel-pack/PNG/Tiles/stone_iron.png", renderer);
+    tableau_matiere[6] = load_texture_from_image("voxel-pack/PNG/Tiles/greystone.png", renderer);
+    tableau_matiere[7] = load_texture_from_image("voxel-pack/PNG/Tiles/greystone_left_top.png", renderer);
+    tableau_matiere[8] = load_texture_from_image("voxel-pack/PNG/Tiles/greystone_right_top.png", renderer);
+    tableau_matiere[9] = load_texture_from_image("voxel-pack/PNG/Tiles/greystone_left_bot.png", renderer);
+    tableau_matiere[10] = load_texture_from_image("voxel-pack/PNG/Tiles/greystone_right_bot.png", renderer);
+    tableau_matiere[11] = load_texture_from_image("voxel-pack/PNG/Tiles/greystone_top.png", renderer);
+    tableau_matiere[12] = load_texture_from_image("voxel-pack/PNG/Tiles/greystone_right.png", renderer);
+    tableau_matiere[13] = load_texture_from_image("voxel-pack/PNG/Tiles/greystone_left.png", renderer);
+    tableau_matiere[14] = load_texture_from_image("voxel-pack/PNG/Tiles/greystone_bot.png", renderer);
+    tableau_matiere[15] = load_texture_from_image("voxel-pack/PNG/Tiles/greystone.png", renderer);
+    dessin_arriere_plan(renderer, tableau_matiere);
     SDL_Event event;
     while (running)
     {
@@ -115,6 +120,10 @@ int main()
 
         SDL_RenderPresent(renderer);
         SDL_Delay(17);
+    }
+    for (int i = 0; i < 16; i++)
+    {
+        SDL_DestroyTexture(tableau_matiere[i]);
     }
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
