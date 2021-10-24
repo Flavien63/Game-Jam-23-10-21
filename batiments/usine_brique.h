@@ -13,7 +13,7 @@
 /****************************************************************************************/
 /*newUsinne_brique : cree un nouveau batiment de type Usine_Brique selon les bonnes spec*/
 /****************************************************************************************/
-void newUsine_brique(batiment_io_t * tab_bat[C_MAX][C_MAX] , int pos_x , int pos_y);
+void newUsine_brique(batiment_io_t * tab_bat[20][20] , int pos_x , int pos_y);
 
 /****************************************************************************************/
 /*processUsinne_brique : produit la bonne ressource selon les spec de Usine_brique      */

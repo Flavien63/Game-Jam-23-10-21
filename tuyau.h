@@ -8,7 +8,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
-
+#include "batiments/batiment_io.h"
 #include <math.h>
 
 #define TAILLE_MAP 20
@@ -44,28 +44,6 @@ enum TuyauOrientation
     droite_haut,
     droite_bas
 };
-
-// A virer apres merge avec nathan
-typedef struct door
-{
-    int *tube;
-    int type;
-} door_t;
-
-// A virer apres merge avec nathan
-typedef struct batiment_io
-{
-    int pos_x;
-    int pos_y;
-
-    int *stock_entree;
-    int *stock_sortie;
-
-    door_t d_top;
-    door_t d_bottom;
-    door_t d_left;
-    door_t d_right;
-} batiment_io_t;
 
 typedef struct tuyau
 {
@@ -113,7 +91,5 @@ int check_entree_tuyau(tuyau_t *tuyau);
 int decale_dans_tuyau(tuyau_t *tuyau);
 int insertion_dans_tuyau(tuyau_t *tuyau, enum Ressource);
 
-// A virer quand merge avec nathan
-int deleteDoor(batiment_io_t *batiment, tuyau_t *tube);
 
 #endif

@@ -6,7 +6,9 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
 #include "background.h"
-#include "local_test/tests_batiments.h"
+#include "menu.h"
+#include "event.h"
+#include "time.h"
 
 int main();
 /*#include "couleurs.h"

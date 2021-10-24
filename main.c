@@ -71,9 +71,23 @@ int main()
     {
         fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError());
     }
+/*font de merde la*/
+ if (TTF_Init() != 0)
+    {
+        fprintf(stderr, "Erreur d'initialisation TTF : %s\n", TTF_GetError()); 
+    }
+
+    TTF_Font *font1=NULL;
+
+    font1 = TTF_OpenFont("arial.ttf", 60);
+    if (font1==NULL)
+    {
+        fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError());
+    }
 
 
-   SDL_Texture **tableau_matiere = malloc(18 * sizeof(SDL_Texture *));
+/*Charge les textures*/
+   SDL_Texture **tableau_matiere = malloc(25 * sizeof(SDL_Texture *));
     tableau_matiere[0] = load_texture_from_image("voxel-pack/PNG/Tiles/stone.png", renderer);
     tableau_matiere[1] = load_texture_from_image("voxel-pack/PNG/Tiles/stone_browniron.png", renderer);
     tableau_matiere[2] = load_texture_from_image("voxel-pack/PNG/Tiles/stone_silver.png", renderer);
@@ -92,6 +106,7 @@ int main()
     tableau_matiere[15] = load_texture_from_image("voxel-pack/PNG/Tiles/greystone.png", renderer);
   tableau_matiere[16]= load_texture_from_image("horizontale.png", renderer );
 	tableau_matiere[17]= load_texture_from_image("virage_2.png", renderer );
+    tableau_matiere[18] = load_texture_from_image("voxel-pack/PNG/Tiles/oven.png", renderer);
 	
 	dessin_arriere_plan(renderer, tableau_matiere);
 	/*tuyau en dur*/
@@ -112,7 +127,26 @@ int main()
 	dessin_texture(0,0,r_numero_texture(1),tableau_minerai,renderer,angle(1), r_miroir(1));
 	dessin_texture(0,0,r_numero_texture(1),tableau_minerai,renderer,angle(1), r_miroir(1));
 	dessin_texture(0,0,r_numero_texture(1),tableau_minerai,renderer,angle(1), r_miroir(1));
-  */  SDL_Event event;
+  */
+
+/*carte bat de merde*/
+	batiment_io_t* carte_bat[20][20];
+	for (int i=0; i<20; i++)
+	{
+		for (int j=0; j<20; j++)
+			carte_bat[i][j]=NULL;
+	}
+		
+    SDL_Event event;
+    int tick=0;
+    int affiche=0;
+    clock_t begin,end;
+    begin=clock();
+    int status=0;
+	 int money=5100;
+    //liste_tuyau_t *ltuyau
+    //initListeTuyau(&ltuyau)
+
     while (running)
     {
         while (SDL_PollEvent(&event))
@@ -133,23 +167,46 @@ int main()
                     break;
                 }
                 break;
-            case SDL_QUIT:
+					case SDL_MOUSEBUTTONDOWN:
+                mainevent(event.button.x,event.button.y,&status,&money,carte_bat);
+                affiche=1;
+                break;
+                 case SDL_QUIT:
                 running = 0;
                 break;
             }
             break;
         }
+        end=clock();
+        if (((end-begin)*1000/CLOCKS_PER_SEC)>10)   //1 tick = 100ms
+        {
+            tick=1;
+            begin=clock();
+        }
+        if (tick)
+        {
+            affiche=1;
+            tick=0;
+        }  
+ 		  if (affiche)
+        {
+				
+            affichemenu(renderer,money,font1,status);
+				dessin_arriere_plan(renderer, tableau_matiere);
+				dessin_bat(carte_bat,renderer,tableau_matiere);
+            affiche=0;
+            SDL_RenderPresent(renderer);
+        }
+        SDL_Delay(10);
         
-
-    	SDL_RenderPresent(renderer);
-        SDL_Delay(17);
     }
     SDL_DestroyRenderer(renderer);
-	for (int i = 0; i < 16; i++)
-  	{
-     SDL_DestroyTexture(tableau_matiere[i]);
-  	}	
     SDL_DestroyWindow(window);
+	for (int i=0; i<19; i++)
+		SDL_DestroyTexture(tableau_matiere[i]);
+	free(tableau_matiere);
+    TTF_CloseFont(font1);
+    TTF_Quit();
     SDL_Quit();
     return 0;
 }

@@ -125,13 +125,14 @@ void dessin_arriere_plan(SDL_Renderer *renderer, SDL_Texture **tableau_minerai)
 	}
 }
 
-void dessin_bat(int **carte, SDL_Renderer* renderer, SDL_Texture ** tableau_texture)
+void dessin_bat(batiment_io_t *carte_bat[20][20], SDL_Renderer* renderer, SDL_Texture ** tableau_texture)
 {
 	for (int j = 0; j < 20; ++j)
 	{
 		for (int i = 0; i < 20; ++i)
 		{
-			dessin_texture(i, j, carte[i][j]+18, tableau_texture,renderer,0,SDL_FLIP_NONE);
+			if (carte_bat[i][j]!=NULL)
+			dessin_texture(j, i, carte_bat[i][j]->type +18, tableau_texture,renderer,0,SDL_FLIP_NONE);
 		}
 	}
 }
