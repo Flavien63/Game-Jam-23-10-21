@@ -52,22 +52,9 @@ int r_numero_texture(int num_tuyau)
 {
 	int numero_texture;
 	if (num_tuyau==0) numero_texture=0;
-	else if (num_tuyau==1 || num_tuyau==4 || num_tuyau==7  || num_tuyau==10) numero_texture=1;
-	else  numero_texture=2;
+	else if (num_tuyau==1 || num_tuyau==4 || num_tuyau==7  || num_tuyau==10) numero_texture=16;
+	else  numero_texture=17;
 	return numero_texture;
-}
-
-
-void dessin_arriere_plan(int carte[20][20], SDL_Renderer* renderer, SDL_Texture** tableau_minerai)
-{
-//peut être farie une génération aléatopire plsu tard 
-	for (int	j=0;j<20;++j)
-	{
-		for (int	i=0;i<20;++i)
-		{
-			dessin_texture(i,j,carte[i][j],tableau_minerai,renderer, 0,SDL_FLIP_NONE);
-		}
-	}
 }
 
 void dessin_tuyau(listeTuyau_t * tuyau_l, SDL_Texture** tableau_minerai, SDL_Renderer* renderer)
@@ -88,5 +75,52 @@ void dessin_tuyau(listeTuyau_t * tuyau_l, SDL_Texture** tableau_minerai, SDL_Ren
 		miroir=r_miroir(num_tuyau);
 		dessin_texture(x,y,numero_texture,tableau_minerai,renderer,angle,miroir);
 	}
+	}
+}
+
+
+void dessin_arriere_plan(SDL_Renderer *renderer, SDL_Texture **tableau_minerai)
+{
+	//dessin de la carte au hasard sans cluster
+    /*for (int j = 0; j < 20; ++j)
+    {
+        for (int i = 0; i < 20; ++i)
+        {
+            carte[i][j] = ((hasard < 910) && (hasard >= 850)) + ((hasard < 960) && (hasard >= 910)) * 2 + ((hasard < 980) && (hasard >= 960)) * 3 + ((hasard < 995) && (hasard >= 980)) * 4 + ((hasard < 1000) && (hasard >= 995)) * 5;
+			printf("La case %d %d aura la texture : %d\n", i, j, carte[i][j]);
+			printf("Le nombre au hasard est : %d\n", hasard);
+			hasard = rand() % 1000;
+        }
+    }*/
+
+	int carte[20][20] = {{0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			 			 {0,1,1,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0},
+			 			 {0,1,1,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0},
+						 {0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,4,0,0},
+						 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,0,0},
+						 {0,0,0,0,0,0,0,0,0,7,9,0,0,0,0,0,0,0,0,0},
+						 {0,0,0,0,0,0,0,0,0,8,10,0,0,0,0,0,0,0,0,0},
+						 {0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,3,0,0,0},
+						 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,0,0,0},
+						 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,0,0,0,0},
+						 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+						 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+						 {0,1,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0},
+						 {0,1,1,0,0,0,0,0,0,0,4,4,0,0,0,0,0,0,0,0},
+						 {0,0,1,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0},
+						 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0},
+						 {0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+						 {0,0,0,7,13,9,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
+						 {0,0,0,11,15,14,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+						 {0,0,0,8,12,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+
+
+
+	for (int j = 0; j < 20; ++j)
+	{
+		for (int i = 0; i < 20; ++i)
+		{
+			dessin_texture(i, j, carte[i][j], tableau_minerai,renderer,0,SDL_FLIP_NONE);
+		}
 	}
 }
