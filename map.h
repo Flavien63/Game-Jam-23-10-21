@@ -1,7 +1,6 @@
 #ifndef MAP_H
 #define MAP_H
 
-#include "tuyau.h"
 #include "batiments/batiment_io.h"
 
 #define TAILLE_MAP 20

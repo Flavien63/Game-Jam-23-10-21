@@ -49,3 +49,28 @@ void testCreationUsine()
     deleteDoor(tab_bat[15][12] , 0);
     deleteBatiment(tab_bat[15][12]);
 }
+
+
+void testTuyau()
+{
+    listeTuyau_t * lst_tuyau = NULL;
+    map_t * map = NULL;
+
+    initMap(&map);
+    initListeTuyau(&lst_tuyau);
+    
+    newUsine_brique(map->batiment, 15 , 12);
+    newUsine_brique(map->batiment, 12 , 12);
+    
+    initTuyau(&lst_tuyau);
+    constructionTuyau(&lst_tuyau , &map , 15 * 45 , 12 * 45);
+    constructionTuyau(&lst_tuyau , &map , 14 * 45 , 12 * 45);
+    constructionTuyau(&lst_tuyau , &map , 13 * 45 , 12 * 45);
+    constructionTuyau(&lst_tuyau , &map , 12 * 45 , 12 * 45);
+
+    printf("entree = %d\n" , (*(map->tuyau[12][14]))->cote_entree);
+    printf("type_entree = %d\n" , map->batiment[12][15]->door_T[0]);
+    printf("type_entree = %d\n" , map->batiment[12][15]->door_T[1]);
+    printf("type_entree = %d\n" , map->batiment[12][15]->door_T[2]);
+    printf("type_entree = %d\n" , map->batiment[12][15]->door_T[3]);
+}

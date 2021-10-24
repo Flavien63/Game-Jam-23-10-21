@@ -1,5 +1,19 @@
 #include "tuyau.h"
 
+void initMap(map_t ** map)
+{
+    *map = (map_t *)malloc(sizeof(map_t));
+    for (int i = 0; i < TAILLE_MAP; i++)
+    {
+        for (int j = 0; j < TAILLE_MAP; j++)
+        {
+            (*map)->batiment[i][j] = NULL;
+            (*map)->tuyau[i][j] = NULL;
+        }
+    }
+
+}
+
 int mainTuyau()
 {
     int erreur;
@@ -7,15 +21,8 @@ int mainTuyau()
     erreur = initListeTuyau(&l);
 
     map_t *map = NULL;
-    map = malloc(sizeof(map_t));
-    for (int i = 0; i < TAILLE_MAP; ++i)
-    {
-        for (int j = 0; j < TAILLE_MAP; j++)
-        {
-            map->batiment[i][j] = NULL;
-            map->tuyau[i][j] = NULL;
-        }
-    }
+    initMap(&map);
+
     batiment_io_t *bat1 = malloc(sizeof(batiment_io_t));
     batiment_io_t *bat2 = malloc(sizeof(batiment_io_t));
     bat1->pos_x = 0;
@@ -67,7 +74,7 @@ int initListeTuyau(listeTuyau_t **l_tuyau)
 {
     int erreur = 1; // Erreur
     *l_tuyau = (listeTuyau_t *)malloc(sizeof(listeTuyau_t));
-    if (l_tuyau != NULL)
+    if (*l_tuyau != NULL)
     {
         (*l_tuyau)->taille = 0;
 
@@ -82,14 +89,51 @@ int initListeTuyau(listeTuyau_t **l_tuyau)
 }
 
 
-void PlaceCoteBat(map_t ** p_map ,int x_case_prec , int y_case_prec , int x_case_souris , int y_case_souris)
+void PlaceCoteBatEntree(map_t ** p_map ,int x_case_prec , int y_case_prec , int x_case_souris , int y_case_souris)
 {
-    if (x_case_souris > x_case_prec)
+    if (y_case_souris - y_case_prec == 1)
     {
-        if (y_case_souris > y_case_prec)
-        {
-            (*p_map)->tuyau[x_case_prec][y_case_prec]
-        }
+        (*(*p_map)->tuyau[y_case_souris][x_case_souris])->cote_entree = 0;
+        newDoor((*p_map)->batiment[y_case_prec][x_case_prec] , 0 , 0);
+    }
+    else if (y_case_souris - y_case_prec == -1)
+    {
+        (*(*p_map)->tuyau[y_case_souris][x_case_souris])->cote_entree = 2;
+        newDoor((*p_map)->batiment[y_case_prec][x_case_prec] , 2 , 0);
+    }
+    else if (x_case_souris - x_case_prec == 1)
+    {
+        (*(*p_map)->tuyau[y_case_souris][x_case_souris])->cote_entree = 1;
+        newDoor((*p_map)->batiment[y_case_prec][x_case_prec] , 1 , 0);
+    }
+    else if (x_case_souris - x_case_prec == -1)
+    {
+        (*(*p_map)->tuyau[y_case_souris][x_case_souris])->cote_entree = 3;
+        newDoor((*p_map)->batiment[y_case_prec][x_case_prec] , 3 , 0);
+    }
+}
+
+void PlaceCoteBatSortie(map_t ** p_map ,int x_case_prec , int y_case_prec , int x_case_souris , int y_case_souris)
+{
+    if (y_case_souris - y_case_prec == -1)
+    {
+        (*(*p_map)->tuyau[y_case_prec][x_case_prec])->cote_entree = 0;
+        newDoor((*p_map)->batiment[y_case_souris][x_case_souris] , 0 , 1);
+    }
+    else if (y_case_souris - y_case_prec == 1)
+    {
+        (*(*p_map)->tuyau[y_case_prec][x_case_prec])->cote_entree = 2;
+        newDoor((*p_map)->batiment[y_case_souris][x_case_souris] , 2 , 1);
+    }
+    else if (x_case_souris - x_case_prec == -1)
+    {
+        (*(*p_map)->tuyau[y_case_prec][x_case_prec])->cote_entree = 1;
+        newDoor((*p_map)->batiment[y_case_souris][x_case_souris] , 1 , 1);
+    }
+    else if (x_case_souris - x_case_prec == 1)
+    {
+        (*(*p_map)->tuyau[y_case_prec][x_case_prec])->cote_entree = 3;
+        newDoor((*p_map)->batiment[y_case_souris][x_case_souris] , 3 , 1);
     }
 }
 
@@ -119,6 +163,8 @@ int constructionTuyau(listeTuyau_t **p_l_tuyau, map_t **p_map, int x_souris, int
     int x_case_prec, y_case_prec;
 
     tuyau_t *tuyau = NULL;
+
+    //initTuyau(p_l_tuyau);
     tuyau = (*p_l_tuyau)->liste[(*p_l_tuyau)->taille - 1];
     int x_case_souris,
         y_case_souris;
@@ -126,13 +172,12 @@ int constructionTuyau(listeTuyau_t **p_l_tuyau, map_t **p_map, int x_souris, int
     x_case_souris = x_souris / 45; // 45 -> taille d'une case en pixel
     y_case_souris = y_souris / 45; // Ils onts pas fait un define ces sauvages
 
-    //    printf("x : %d,  y : %d \n", x_case_souris, y_case_souris);
+    printf("x : %d,  y : %d \n", x_case_souris, y_case_souris);
 
     if (tuyau->taille == 0)
     {
         if (tuyau->entree == NULL) // Clic sur usine car debut tuyau
         {
-
             if ((*p_map)->batiment[y_case_souris][x_case_souris] != NULL)
             { // Lien du tuyau d'entre avec la sortie
                 tuyau->entree = (*p_map)->batiment[y_case_souris][x_case_souris];
@@ -151,7 +196,8 @@ int constructionTuyau(listeTuyau_t **p_l_tuyau, map_t **p_map, int x_souris, int
             erreur = checkCaseAdjacente(*p_map, x_case_souris, y_case_souris, x_case_prec, y_case_prec);
             // Place le tuyau adjacent au batiment
             erreur = placeTuyau(&tuyau, p_map, x_case_souris, y_case_souris);
-            PlaceCoteBat(p_map , x_case_prec , y_case_prec , x_case_souris , y_case_souris);
+            PlaceCoteBatEntree(p_map , x_case_prec , y_case_prec , x_case_souris , y_case_souris);
+            printf("bon cote\n");
         }
     }
     else // Taille != 0
@@ -166,7 +212,7 @@ int constructionTuyau(listeTuyau_t **p_l_tuyau, map_t **p_map, int x_souris, int
             erreur = 6; // 6 - Batiment sortie bien selectione
             // Chemin de tuyau connecte
             orientation_tuyau(tuyau);
-            //tuyau->sortie = .............
+            PlaceCoteBatSortie(p_map , x_case_prec , y_case_prec , x_case_souris , y_case_souris);
         }
         else
         {
