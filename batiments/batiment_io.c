@@ -60,7 +60,7 @@ int newDoor(batiment_io_t * batiment , int side  , int type)
 {
     int erreur = 0;
 
-    if (side >= 0 && side < 4)
+    if (side < 4 && side >= 0)
     {
         batiment->door_T[side] = type;
     }
@@ -121,7 +121,7 @@ int stockSortieVide(batiment_io_t * batiment)
 int destRessource(batiment_io_t * batiment)
 {
     int connection = -1;
-    int i;
+    int i = 0;
     int j = 0;
 
     if (batiment->nb_sortie != 0 && ! stockSortieVide(batiment))
@@ -136,7 +136,7 @@ int destRessource(batiment_io_t * batiment)
             }
              i++;
         }
-        if (i != 4)
+        if (i < 4)
         {
             connection = i;
         }

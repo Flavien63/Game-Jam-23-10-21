@@ -3,7 +3,11 @@
 
 #include "batiment_io.h"
 
+//1 ressource d'entree : regolithe
+#define RES_STOCK_UB_E0 0
 #define MAX_STOCK_UB_E0 2
+//une ressource de sortie : brique
+#define RES_STOCK_UB_S 10
 #define MAX_STOCK_UB_S 1
 
 /****************************************************************************************/

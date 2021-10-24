@@ -36,4 +36,9 @@ void fctUsine_Brique(batiment_io_t * batiment)
 
     processUsine_Brique(batiment);
     dest = destRessource(batiment);
+    //envoi de la ressource RES_STOCK_UB_S dans le tuyau côte dest
+    if (batiment->stock_sortie > 0 && dest >= 0)
+    {
+        batiment->stock_sortie--;
+    }
 }
