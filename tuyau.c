@@ -81,6 +81,19 @@ int initListeTuyau(listeTuyau_t **l_tuyau)
     return erreur;
 }
 
+
+void PlaceCoteBat(map_t ** p_map ,int x_case_prec , int y_case_prec , int x_case_souris , int y_case_souris)
+{
+    if (x_case_souris > x_case_prec)
+    {
+        if (y_case_souris > y_case_prec)
+        {
+            (*p_map)->tuyau[x_case_prec][y_case_prec]
+        }
+    }
+}
+
+
 /****************************************************/
 /*                                                  */
 /*  Construction tuyau                              */
@@ -138,7 +151,7 @@ int constructionTuyau(listeTuyau_t **p_l_tuyau, map_t **p_map, int x_souris, int
             erreur = checkCaseAdjacente(*p_map, x_case_souris, y_case_souris, x_case_prec, y_case_prec);
             // Place le tuyau adjacent au batiment
             erreur = placeTuyau(&tuyau, p_map, x_case_souris, y_case_souris);
-            //tuyau->cote_entree = ..............
+            PlaceCoteBat(p_map , x_case_prec , y_case_prec , x_case_souris , y_case_souris);
         }
     }
     else // Taille != 0
