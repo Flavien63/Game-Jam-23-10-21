@@ -7,7 +7,6 @@
 #include <SDL2/SDL_ttf.h>
 #include "background.h"
 #include "local_test/tests_batiments.h"
-#include "tuyau.h"
 #include "batiments/bat_types.h"
 
 int main();
