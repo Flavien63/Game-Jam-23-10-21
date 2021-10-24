@@ -81,7 +81,9 @@ int mainTuyau()
 int initListeTuyau(listeTuyau_t **l_tuyau)
 {
     int erreur = 1; // Erreur
-    *l_tuyau = (listeTuyau_t *)malloc(sizeof(listeTuyau_t *));
+    (*l_tuyau) = malloc(sizeof(listeTuyau_t));
+	for (int i=0; i<10; i++)
+		(*l_tuyau)->liste[i]=NULL;
     if (l_tuyau != NULL)
     {
         (*l_tuyau)->taille = 0;
@@ -229,7 +231,7 @@ int initTuyau(listeTuyau_t **l_tuyau)
 {
     int erreur = 1;
 
-    tuyau_t *tuyau = (tuyau_t *)malloc(sizeof(tuyau_t *));
+    tuyau_t *tuyau =malloc(sizeof(tuyau_t));
 
     if (tuyau != NULL)
     {

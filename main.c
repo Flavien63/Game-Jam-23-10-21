@@ -51,7 +51,6 @@ int main()
     SDL_Window *window;
     int width = 1200;
     int height =900;
-    int taille = 0;
 	int running=1;
 	
 
@@ -92,7 +91,7 @@ for (int j=0;j<20;++j)
 	dessin_arriere_plan(carte, renderer, tableau_minerai);
 	/*tuyau en dur*/
 
-	listeTuyau_t  *l_tuyau;;
+	listeTuyau_t  *l_tuyau=NULL;
 	initListeTuyau(&l_tuyau);
 	initTuyau(&l_tuyau);
 	l_tuyau->liste[l_tuyau->taille-1]->lien_contenu_case[0][0]=0;
@@ -141,6 +140,10 @@ for (int j=0;j<20;++j)
         SDL_Delay(17);
     }
     SDL_DestroyRenderer(renderer);
+	
+    SDL_DestroyTexture(tableau_minerai[0]);
+    SDL_DestroyTexture(tableau_minerai[1]);
+    SDL_DestroyTexture(tableau_minerai[2]);
     SDL_DestroyWindow(window);
     SDL_Quit();
     return 0;

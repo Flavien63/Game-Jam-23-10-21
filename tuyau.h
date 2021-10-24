@@ -11,7 +11,7 @@
 
 #include <math.h>
 
-#define TAILLE_MAP 5
+#define TAILLE_MAP 20
 #define NB_MAX_CASE (TAILLE_MAP * TAILLE_MAP)
 
 enum CaseMap
@@ -44,12 +44,6 @@ enum TuyauOrientation
     droite_haut,
     droite_bas
 };
-
-typedef struct listeTuyau
-{
-    struct tuyau* liste[NB_MAX_CASE];
-    int taille;
-} listeTuyau_t;
 
 // A virer apres merge avec nathan
 typedef struct door
@@ -87,6 +81,13 @@ typedef struct tuyau
     enum TuyauOrientation orientation[NB_MAX_CASE];
 
 } tuyau_t;
+
+typedef struct listeTuyau
+{
+    struct tuyau* liste[10];
+    int taille;
+} listeTuyau_t;
+
 
 typedef struct map
 {
