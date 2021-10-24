@@ -1,5 +1,4 @@
 #include "main.h"
-#include "local_test/tests_batiments.h"
 
 int main()
 {

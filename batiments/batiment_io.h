@@ -3,10 +3,6 @@
 
 #define C_MAX 20
 
-/*
-types de batiment : usine_brique = 0;
-*/
-
 typedef struct batiment_io
 {
     int pos_x;
