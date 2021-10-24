@@ -13,5 +13,6 @@ int r_angle(int num_tuyau);
 SDL_RendererFlip r_miroir(int num_tuyau);
 int r_numero_texture(int num_tuyau);
 void dessin_tuyau(listeTuyau_t * tuyau_l, SDL_Texture** tableau_minerai, SDL_Renderer* rendeder);
+void dessin_bat(int **carte, SDL_Renderer *renderer, SDL_Texture ** tableau_texture);
 
 #endif
