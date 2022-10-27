@@ -1,4 +1,4 @@
 # Game-Jam-23-10-21
-##Lunaire 
+## Lunaire 
 
 A small sdl2 game 
